@@ -1,6 +1,6 @@
 #include <Wire.h>
 
-int Pulse_Sensor = 5;//Pulse Senor input is pin 5
+int Pulse_Sensor = A2;//Pulse Senor input is pin A2
 int Aduino_receiver = 9; //the receiver arduino is connected to pin 9
 const int Push_button = 2; //push button that starts data collection from pulse sensor is at pin 2
 int Pulse_data;
