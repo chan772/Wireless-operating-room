@@ -1,6 +1,6 @@
 #include <Wire.h>
 
-int LED_Output = 9; //LED output is pin 9
+int LED_Output = 13; //LED output is pin 13
 int Data_State = 0;// State of the data
 
 
