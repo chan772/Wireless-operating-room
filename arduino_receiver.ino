@@ -1,6 +1,6 @@
 #include <Wire.h>
 
-int LED_Output = 28; //LED output is pin 13
+int LED_Output = 28; //LED output is pin 28
 int Data_State = 0;// State of the data
 
 //This is the Arduino reciver. This arduino has a LED that
