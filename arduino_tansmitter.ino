@@ -5,7 +5,9 @@ int Aduino_receiver = 9; //the receiver arduino is connected to pin 9
 const int Push_button = 2; //push button that starts data collection from pulse sensor is at pin 2
 int Pulse_data;
 
-
+//This is the Arduino that transmits data. This arduino has a pulse sensor and switch.
+//When the switch is pressed the ardunino collects data fom the pulse sensor.
+//Then the data is tansmitted through wire to the receiving Arduino.
 
 void setup() {
   pinMode(Pulse_Sensor, INPUT);
