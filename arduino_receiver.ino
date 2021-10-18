@@ -3,6 +3,9 @@
 int LED_Output = 13; //LED output is pin 13
 int Data_State = 0;// State of the data
 
+//This is the Arduino reciver. This arduino has a LED that
+//turn on when data is received from the transmitter arduino
+
 
 void setup() {
   pinMode(LED_Output, OUTPUT);
