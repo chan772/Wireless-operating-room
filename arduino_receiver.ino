@@ -1,5 +1,6 @@
-#include <Wire.h>
+#include <SoftwareSerial.h>
 
+SoftwareSerial XBee(2, 3);
 int LED_Output = 28; //LED output is pin 28
 int Data_State = 0;// State of the data
 
@@ -7,17 +8,16 @@ int Data_State = 0;// State of the data
 //turn on when data is received from the transmitter arduino
 
 
-void setup() {
+void setup()
+{
   pinMode(LED_Output, OUTPUT);
+  XBee.begin(9600);
+  Serial.begin(9600);
 }
 
-// the loop function runs over and over again forever
-void loop() {
-
-  Wire.begin(9); // join i2c bus (address optional for master) 
-  Data_State = Wire.read(); // read data transmitted from transmitter arduinos
-  Wire.endTransmission(); // stop transmitting
-
+void loop()
+{
+  Data_State = XBee.read(); // read data transmitted from transmitter arduinos
   //if data was received turn on the LED
   if (Data_State != 0) {
     digitalWrite(LED_Output, HIGH);
@@ -26,5 +26,4 @@ void loop() {
     digitalWrite(LED_Output, LOW);
     delay(200);
   }
-  
 }
