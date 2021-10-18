@@ -20,10 +20,10 @@ void loop() {
 
   //if data was received turn on the LED
   if (Data_State != 0) {
-    digitalWrite(LED, HIGH);
+    digitalWrite(LED_Output, HIGH);
     delay(200);// wait for a second
   } else {
-    digitalWrite(LED, LOW);
+    digitalWrite(LED_Output, LOW);
     delay(200);
   }
   
