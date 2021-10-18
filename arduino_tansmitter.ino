@@ -10,7 +10,7 @@ int Pulse_data;
 //Then the data is tansmitted through wire to the receiving Arduino.
 
 void setup() {
-  pinMode(Pulse_Sensor, INPUT);
+  pinMode(Pulse_Sensor, OUTPUT);
   pinMode(Push_button, INPUT);
   Wire.begin(); // join i2c bus (address optional for master)
   Serial.begin(9600); // start serial for output
