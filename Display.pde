@@ -50,6 +50,6 @@ void draw(){  //same as loop in arduino
 //When you press the start button, it gets the BPM from the serial port
 
 void serialEvent(Serial myPort) {
-  bpm = myPort.readBytes();
-  myBPM = bpm[0] & 0xff;  
+  myBPM = myPort.read();
+  //myBPM = bpm[0] & 0xff;  
 }
