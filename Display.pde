@@ -7,6 +7,7 @@ ControlP5 cp5; //create ControlP5 object
 PFont font;
 PFont font2;
 int myBPM = -1;
+byte[] bpm;
 ScrollableList lstPortList;
 
 void setup(){ //same as arduino program
@@ -42,12 +43,13 @@ void draw(){  //same as loop in arduino
    text("Medical Data", 280, 80);  // ("text", x coordinate, y coordinate)
    //text("     ", 100, 150);
    textFont(font2);
-   text("The BPM is:" + myBPM, 200, 300);
+   text("The BPM is:" + myBPM, 280, 300);
 }
 
 
 //When you press the start button, it gets the BPM from the serial port
 
 void serialEvent(Serial myPort) {
-  myBPM = myPort.read();
+  bpm = myPort.readBytes();
+  myBPM = bpm[0] & 0xff;  
 }
