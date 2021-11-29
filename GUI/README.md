@@ -13,6 +13,6 @@ https://www.digi.com/resources/documentation/digidocs/90001438/Default.htm#tasks
 12. Name the Library XBee. Then select ADD JAR/Folder. Navigate to the libs folder from step 8 and add the follwing JAR files to the library xbee-java-library-X.Y.Z.jar, rxtx-2.2.jar
 slf4j-api-1.7.12.jar, slf4j-nop-1.7.12.jar, android-sdk-5.1.1.jar.
 13. Similar to step 11 and 12, create a new library with the name JSSC and add the jar file jssc.jar from the file in step 10 -> jSSC-2.7.0-Release.
-14. Similar to step 11 and 12, create a new library with the name Javafx and add the jar file jssc.jar from the file in step 10 -> jSSC-2.7.0-Release.
+14. Similar to step 11 and 12, create a new library with the name Javafx and add the jar file 
 
 uncompleted 
