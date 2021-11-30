@@ -19,7 +19,7 @@ https://www.digi.com/resources/documentation/digidocs/90001438/Default.htm#tasks
 https://www.digi.com/resources/documentation/digidocs/90001438/Default.htm#tasks/t_add_application_source_code_netbeans.htm?TocPath=Getting%2520started%2520with%2520XBee%2520Java%2520Library%257CBuild%2520your%2520first%2520XBee%2520Java%2520application%257CAdd%2520the%2520application%2520source%2520code%257C_____2
 18. Go to the file in (step 9-> javafx-sdk-17.0.1->lib) then copy the address of the lib file as text
 19. For Windows OS go to the file in (step 7-> native -> Windows -> win64) then copy the address of the win64 file as text. For MAC OS go to the file in (step 7-> native -> Mac_OS_X) then copy the address of the Mac_OS_X file as text
-20. In Netbeans on the left right click on myFirstXBeeApp project and select properties. Then go to Run. In the VM options section add the following:  --add-modules=javafx.controls,javafx.fxml --module-path "address copied from step 18" --module-path "address copied from step 19"
+20. In Netbeans on the left right click on myFirstXBeeApp project and select properties. Then go to Run. In the VM options section add the following: --module-path "address copied from step 18" --add-modules=javafx.controls,javafx.fxml  --module-path "address copied from step 19"
 21. In the Main class section add the following: com.digi.xbee.example.MainApp
 21. then click ok 
 23. Download and install scene builder from this link https://gluonhq.com/products/scene-builder/
