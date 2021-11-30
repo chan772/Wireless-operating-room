@@ -25,6 +25,6 @@ https://www.digi.com/resources/documentation/digidocs/90001438/Default.htm#tasks
 24. Download and install scene builder from this link https://gluonhq.com/products/scene-builder/
 25. In Netbeans go to Tools-> options. Then follow the image below. then click ok 
 26. ![image](https://user-images.githubusercontent.com/92693957/144100375-47694a87-cb67-4fb2-babc-c58bdc468681.png)
-27. In Netbeans on th left exand you project myFirstXBeeApp -> Source Packages -. com.digi.xbee.example
+27. In Netbeans on th left exand you project myFirstXBeeApp -> Source Packages -> com.digi.xbee.example
 28. Then remove what is in MainApp.java then copy the contents of MainApp.java in this github and paste it into your Netbeans MainApp.java.
 29. Save the content of your file then click on Run (a play icon on the top bar).
