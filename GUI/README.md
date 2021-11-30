@@ -11,7 +11,20 @@ https://www.digi.com/resources/documentation/digidocs/90001438/Default.htm#tasks
 10. Create a folder called jSSC in the root file of the project and unzip the contents of the downloaded jSSC-2.70-Release.zip file from step 5
 11. In Netbeans go to Tools-> Libariries ->New Libary
 12. Name the Library XBee. Then select ADD JAR/Folder. Navigate to the libs folder from step 7 and add the follwing JAR files to the library xbee-java-library-X.Y.Z.jar, rxtx-2.2.jar, slf4j-api-1.7.12.jar, slf4j-nop-1.7.12.jar, android-sdk-5.1.1.jar.
-13. Similar to step 11 and 12, create a new library with the name JSSC and add the jar file jssc.jar from the file in step 10 -> jSSC-2.7.0-Release.
-14. Similar to step 11 and 12, create a new library with the name Javafx and add the jar file 
-
-uncompleted 
+13. Similar to step 11 and 12, create a new library with the name JSSC and add the jar file jssc.jar from the file in (step 10 -> jSSC-2.7.0-Release) to the classpath and sources. 
+14. Similar to step 11 and 12, create a new library with the name Javafx and add the jar files in the file in (step 9-> javafx-sdk-17.0.1->lib) to the classpath. CLick on Add JAR/Folder again in the classpath then add the bin file from the file in (step 9 ->javafx-sdk-17.0.1). Click on Sources in Netbeans and add JAR/FOLDER to add src.zip from the file in (step 9 ->javafx-sdk-17.0.1).
+15. Then click ok
+16. In Netbeans on the left right click on myFirstXBeeApp project and select properties. Then go to Libraries. In the classpath click on the add icon the select Add Library. Then add the 3 libraries(XBee, JavaFx, JSSC) you created earlier. 
+17. Go to the link below and follow steps 1 - 5. 
+https://www.digi.com/resources/documentation/digidocs/90001438/Default.htm#tasks/t_add_application_source_code_netbeans.htm?TocPath=Getting%2520started%2520with%2520XBee%2520Java%2520Library%257CBuild%2520your%2520first%2520XBee%2520Java%2520application%257CAdd%2520the%2520application%2520source%2520code%257C_____2
+19. Go to the file in (step 9-> javafx-sdk-17.0.1->lib) then copy the address of the lib file as text
+20. For Windows OS go to the file in (step 7-> native -> Windows -> win64) then copy the address of the win64 file as text. For MAC OS go to the file in (step 7-> native -> Mac_OS_X) then copy the address of the Mac_OS_X file as text
+21. In Netbeans on the left right click on myFirstXBeeApp project and select properties. Then go to Run. In the VM options section add the following:  --add-modules=javafx.controls,javafx.fxml --module-path "address copied from step 19" --module-path "address copied from step 20"
+22. In the Main class section add the following: com.digi.xbee.example.MainApp
+23. then click ok 
+24. Download and install scene builder from this link https://gluonhq.com/products/scene-builder/
+25. In Netbeans go to Tools-> options. Then follow the image below. then click ok 
+26. ![image](https://user-images.githubusercontent.com/92693957/144100375-47694a87-cb67-4fb2-babc-c58bdc468681.png)
+27. In Netbeans on th left exand you project myFirstXBeeApp -> Source Packages -. com.digi.xbee.example
+28. Then remove what is in MainApp.java then copy the contents of MainApp.java in this github and paste it into your Netbeans MainApp.java.
+29. Save the content of your file then click on Run (a play icon on the top bar).
