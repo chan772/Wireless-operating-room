@@ -10,7 +10,7 @@ https://www.digi.com/resources/documentation/digidocs/90001438/Default.htm#tasks
 9. Create a folder called javaFx in the root file of the project and unzip the contents of the downloaded javafx from step 4
 10. Create a folder called jSSC in the root file of the project and unzip the contents of the downloaded jSSC-2.70-Release.zip file from step 5
 11. In Netbeans go to Tools-> Libariries ->New Libary
-12. Name the Library XBee. Then select ADD JAR/Folder. Navigate to the libs folder from step 7 and add the follwing JAR files to the library xbee-java-library-X.Y.Z.jar, rxtx-2.2.jar, slf4j-api-1.7.12.jar, slf4j-nop-1.7.12.jar, android-sdk-5.1.1.jar.
+12. Name the Library XBee. Then select ADD JAR/Folder. Navigate to the libs folder from step 7 and add the follwing JAR files to the library xbee-java-library-X.Y.Z.jar, rxtx-2.2.jar, slf4j-api-1.7.12.jar, slf4j-nop-1.7.12.jar, android-sdk-5.1.1.jar, android-sdk-addon-3.jar.
 13. Similar to step 11 and 12, create a new library with the name JSSC and add the jar file jssc.jar from the file in (step 10 -> jSSC-2.7.0-Release) to the classpath and sources. 
 14. Similar to step 11 and 12, create a new library with the name Javafx and add the jar files in the file in (step 9-> javafx-sdk-17.0.1->lib) to the classpath. CLick on Add JAR/Folder again in the classpath then add the bin file from the file in (step 9 ->javafx-sdk-17.0.1). Click on Sources in Netbeans and add JAR/FOLDER to add src.zip from the file in (step 9 ->javafx-sdk-17.0.1).
 15. Then click ok
