@@ -143,6 +143,7 @@ public class MainApp extends Application {
             try {
                 myXBeeDevice.open();
                 // Create a Remote XBee device 
+                //Replace 0010013A20040XX in the next line with the MAC address of the remote XBee
                 myRemoteDevice = new RemoteXBeeDevice (myXBeeDevice, new XBee64BitAddress("0010013A20040XX"));
                 // Read data sent by remote Xbee device 
                 xbeeMessage = myXBeeDevice.readDataFrom(myRemoteDevice);
