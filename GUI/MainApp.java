@@ -155,10 +155,13 @@ public class MainApp extends Application {
                 
                 @Override
                 public void serialEvent(SerialPortEvent event) {
-                    var serialData1 = event.getSerialPort().bytesAvailable();
-                    System.out.println(serialData1);
+                    var bytes = event.getSerialPort().bytesAvailable();
+                    byte[] buffer = new byte[bytes];
+                    int x = event.getSerialPort().readBytes(buffer, bytes);
+                    int value = buffer[0] & 0xff;    //convert to int
+                    System.out.println(value);
                     Platform.runLater(() -> {
-                        labelValue.setText(String.valueOf(serialData1));
+                        labelValue.setText(String.valueOf(value));
                     });
                 }
 
