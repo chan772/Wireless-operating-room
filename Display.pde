@@ -27,7 +27,7 @@ void setup(){ //same as arduino program
         .setFont(createFont("Arial", 35))
         .setColorForeground(color(40, 128))
         .setValue(0);
-  
+  port = new Serial(this,"COM9", 9600);  //change COM to right value
   font = createFont(PFont.list()[2], 35);//custom font with 3rd font available and size 35
   font2 = createFont(PFont.list()[0], 50);//custom font with 1st font available and size 50
     
@@ -52,8 +52,9 @@ void serialEvent(Serial myPort) {
   //myBPM = bpm[0] & 0xff;  
 }
 
-void controlEvent(ControlEvent theEvent){
-  if (theEvent.getController() == lstPortList){
-    port = new Serial(this,theEvent.getLabel(), 9600);  //i have connected arduino to the chose com
-  }
-}
+//void controlEvent(ControlEvent theEvent){
+ // if (theEvent.getController() == lstPortList){
+    //println(theEvent.getName());
+    //port = new Serial(this,theEvent.getLabel(), 9600);  //i have connected arduino to the chose com
+  //}
+//}
