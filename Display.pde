@@ -27,7 +27,6 @@ void setup(){ //same as arduino program
         .setFont(createFont("Arial", 35))
         .setColorForeground(color(40, 128))
         .setValue(0);
-  port = new Serial(this,lstPortList.getCaptionLabel().getText(), 9600);  //i have connected arduino to the chose com
   
   font = createFont(PFont.list()[2], 35);//custom font with 3rd font available and size 35
   font2 = createFont(PFont.list()[0], 50);//custom font with 1st font available and size 50
@@ -47,9 +46,14 @@ void draw(){  //same as loop in arduino
 }
 
 
-//When you press the start button, it gets the BPM from the serial port
 
 void serialEvent(Serial myPort) {
   myBPM = myPort.read();
   //myBPM = bpm[0] & 0xff;  
+}
+
+void controlEvent(ControlEvent theEvent){
+  if (theEvent.getController() == lstPortList){
+    port = new Serial(this,theEvent.getLabel(), 9600);  //i have connected arduino to the chose com
+  }
 }
