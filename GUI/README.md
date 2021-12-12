@@ -1,3 +1,5 @@
+The code is incomplete. The setup is for NetBeans application on how to add libraries and run the code. 
+
 1. This file contains instructions on how to setup the GUI
 2. Firstly download and install Netbeans from this link https://netbeans.apache.org//
 3. Then create a project by following the instructions in the link below
