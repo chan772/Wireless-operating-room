@@ -1,17 +1,15 @@
-/*****************************************************************
-XBee_Serial_Passthrough.ino
+/*  Getting_BPM_to_Monitor prints the BPM to the Serial Monitor, using the least lines of code and PulseSensor Library.
+ *  Tutorial Webpage: https://pulsesensor.com/pages/getting-advanced
+ *
+--------Use This Sketch To------------------------------------------
+1) Displays user's live and changing BPM, Beats Per Minute, in Arduino's native Serial Monitor.
+2) Print: "♥  A HeartBeat Happened !" when a beat is detected, live.
+2) Learn about using a PulseSensor Library "Object".
+4) Blinks LED on PIN 13 with user's Heartbeat.
+--------------------------------------------------------------------*/
 
-Set up a software serial port to pass data between an XBee Shield
-and the serial monitor.
-
-Hardware Hookup:
-  The XBee Shield makes all of the connections you'll need
-  between Arduino and XBee. If you have the shield make
-  sure the SWITCH IS IN THE "DLINE" POSITION. That will connect
-  the XBee's DOUT and DIN pins to Arduino pins 2 and 3.
-
-*****************************************************************/
-// We'll use SoftwareSerial to communicate with the XBee:
+#define USE_ARDUINO_INTERRUPTS true    // Set-up low-level interrupts for most acurate BPM math.
+#include <PulseSensorPlayground.h>     // Includes the PulseSensorPlayground Library.   
 #include <SoftwareSerial.h>
 
 //For Atmega328P's
@@ -19,28 +17,46 @@ Hardware Hookup:
 // XBee's DIN (RX) is connected to pin 3 (Arduino's Software TX)
 SoftwareSerial XBee(2, 3); // RX, TX
 
-//For Atmega2560, ATmega32U4, etc.
-// XBee's DOUT (TX) is connected to pin 10 (Arduino's Software RX)
-// XBee's DIN (RX) is connected to pin 11 (Arduino's Software TX)
-//SoftwareSerial XBee(10, 11); // RX, TX
+//  Variables
+const int PulseWire = 0;       // PulseSensor PURPLE WIRE connected to ANALOG PIN 0
+//const int LED13 = 13;          // The on-board Arduino LED, close to PIN 13.
+int Threshold = 550;           // Determine which Signal to "count as a beat" and which to ignore.
+                               // Use the "Gettting Started Project" to fine-tune Threshold Value beyond default setting.
+                               // Otherwise leave the default "550" value. 
+                               
+PulseSensorPlayground pulseSensor;  // Creates an instance of the PulseSensorPlayground object called "pulseSensor"
 
-void setup()
-{
-  // Set up both ports at 9600 baud. This value is most important
-  // for the XBee. Make sure the baud rate matches the config
-  // setting of your XBee.
+
+void setup() {   
   XBee.begin(9600);
-  Serial.begin(9600);
+  Serial.begin(9600);          // For Serial Monitor
+
+  // Configure the PulseSensor object, by assigning our variables to it. 
+  pulseSensor.analogInput(PulseWire);   
+  //pulseSensor.blinkOnPulse(LED13);       //auto-magically blink Arduino's LED with heartbeat.
+  pulseSensor.setThreshold(Threshold);   
+
+  // Double-check the "pulseSensor" object was created and "began" seeing a signal. 
+   if (pulseSensor.begin()) {
+    Serial.println("Begins!");  //This prints one time at Arduino power-up,  or on Arduino reset.  
+  }
 }
 
-void loop()
-{
-  if (Serial.available())
-  { // If data comes in from serial monitor, send it out to XBee
-    XBee.write(Serial.read());
+
+
+void loop() {
+  int myBPM = pulseSensor.getBeatsPerMinute();  // Calls function on our pulseSensor object that returns BPM as an "int".
+                                               // "myBPM" hold this BPM value now. 
+  
+  if (pulseSensor.sawStartOfBeat()) {            // Constantly test to see if "a beat happened". 
+  //Serial.println("♥  A HeartBeat Happened ! "); // If test is "true", print a message "a heartbeat happened".
+  
+  Serial.write(myBPM);
+ 
+  //Serial.println(myBPM);                        // Print the value inside of myBPM. 
+  //XBee.write(int(myBPM));
   }
-  if (XBee.available())
-  { // If data comes in from XBee, send it out to serial monitor
-    Serial.write(XBee.read());
-  }
+
+  delay(20);                    // considered best practice in a simple sketch.
+
 }
