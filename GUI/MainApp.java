@@ -2,11 +2,14 @@ package com.digi.xbee.example;
 
 //import com.digi.xbee.api.WiFiDevice;
 import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.AbstractXBeeDevice;
+import com.digi.xbee.api.connection.serial.SerialPortParameters;
+import com.digi.xbee.api.connection.serial.SerialPortRxTx;
+import com.digi.xbee.api.listeners.IDataReceiveListener;
 import com.digi.xbee.api.exceptions.XBeeException;
 //import com.digi.xbee.api.models.XBeeProtocol;
 import com.digi.xbee.api.models.XBeeMessage;
 import com.digi.xbee.api.RemoteXBeeDevice;
-//import com.digi.xbee.api.listeners.IDataReceiveListener;
 import com.digi.xbee.api.models.XBee64BitAddress;
 
 
@@ -40,6 +43,7 @@ import com.fazecast.jSerialComm.SerialPortDataListener;
 public class MainApp extends Application {
     private static final int BAUD_RATE = 9600;
     ObservableList<String> portList;
+    SerialPort[] serialPortNames;
     Label labelValue;
     RadioButton button1;
     RadioButton button2;
@@ -48,9 +52,14 @@ public class MainApp extends Application {
     //wireless parameters 
     XBeeMessage xbeeMessage;
     XBeeDevice myXBeeDevice;
+    SerialPortParameters portParams;
     RemoteXBeeDevice myRemoteDevice1;
+    //chenge the MAC address in double quotes
+    XBee64BitAddress address1 = new XBee64BitAddress("0013A20040939296");
     //RemoteXBeeDevice myRemoteDevice2;
+    //XBee64BitAddress address2 = new XBee64BitAddress("0013A20040939296");
     //RemoteXBeeDevice myRemoteDevice3;
+    //XBee64BitAddress address3 = new XBee64BitAddress("0013A20040939296");
     
     //wired parameters
     SerialPort serialport;
@@ -61,7 +70,7 @@ public class MainApp extends Application {
     private void detectPort(){
          
         portList = FXCollections.observableArrayList();
-        SerialPort[] serialPortNames = SerialPort.getCommPorts();
+        serialPortNames = SerialPort.getCommPorts();
         for (SerialPort serialPortName : serialPortNames) {
             portList.add(serialPortName.getSystemPortName());
         }
@@ -88,24 +97,25 @@ public class MainApp extends Application {
         final ComboBox comboBoxPorts = new ComboBox(portList);
         comboBoxPorts.valueProperty()
                 .addListener(new ChangeListener<String>() {
-
+            
             @Override
             public void changed(ObservableValue<? extends String> observable, 
                     String oldValue, String newValue) {
+                disconnectArduino();
                 System.out.println("Port Connection is " + newValue);
                 if (tg.getSelectedToggle() == null)
-                    System.out.println("Select a Connection; Wired or Wireless");
+                    System.out.println("Select a Connection: Wired or Wireless");
                 tg.selectedToggleProperty()
                 .addListener(new ChangeListener<Toggle>() {
 
                     @Override
                     public void changed(ObservableValue<? extends Toggle> ob, 
                            Toggle o, Toggle n) {
-
+                        disconnectArduino();
                         RadioButton rb = (RadioButton)tg.getSelectedToggle();
 
                         if (rb == null) {
-                             System.out.println("Select a Connection; Wired or Wireless");
+                             System.out.println("Select a Connection: Wired or Wireless");
                         } else {
                             if (rb.getText().equals("Wired"))
                                 wired = 1;
@@ -141,23 +151,19 @@ public class MainApp extends Application {
 
 
     public void connectArduino(String port) {
-        System.out.println("here 1");
-        System.out.println("here 2");
         if (wired == 1){
             //System.out.println(SerialPort.getCommPort(port));
             serialport = SerialPort.getCommPort(port);
-            System.out.println("here 3");
-            System.out.println("here 4");
             serialport.openPort();
-            System.out.println("here 5");
-            serialport.setComPortParameters(9600, 8, 1, 0);
+            serialport.setComPortParameters(BAUD_RATE, 8, 1, 0);
             serialport.addDataListener( new SerialPortDataListener() {
                 
                 @Override
                 public void serialEvent(SerialPortEvent event) {
                     var bytes = event.getSerialPort().bytesAvailable();
+                    //System.out.println(bytes);
                     byte[] buffer = new byte[bytes];
-                    int x = event.getSerialPort().readBytes(buffer, bytes);
+                    int x = serialport.readBytes(buffer, 1);
                     int value = buffer[0] & 0xff;    //convert to int
                     System.out.println(value);
                     Platform.runLater(() -> {
@@ -171,24 +177,30 @@ public class MainApp extends Application {
                     return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
                 }
             });
-                
-            //System.out.println("here 7");
             //serialport.closePort();
         } else {
             System.out.println("here 9");
-            myXBeeDevice = new XBeeDevice(port, BAUD_RATE);
+            portParams = new SerialPortParameters(BAUD_RATE, 8, 1, 0, 0);
+            myXBeeDevice = new XBeeDevice(port, portParams);
             try {
                 System.out.println("here 10");
                 myXBeeDevice.open();
                 System.out.println("here 11");
                 // Create a Remote XBee device 
-                //Replace 0010013A20040XX in the next line with the MAC address of the remote XBee
-                myRemoteDevice1 = new RemoteXBeeDevice (myXBeeDevice, new XBee64BitAddress("0010013A20040XX"));
+                myRemoteDevice1 = new RemoteXBeeDevice (myXBeeDevice, address1);
+                //myRemoteDevice2 = new RemoteXBeeDevice (myXBeeDevice, address2);
+                //myRemoteDevice3 = new RemoteXBeeDevice (myXBeeDevice, address3);
                 // Read data sent by remote Xbee device 
-                xbeeMessage = myXBeeDevice.readDataFrom(myRemoteDevice1);
-                //Update label in ui thread
-                Platform.runLater(() -> {
-                    labelValue.setText(xbeeMessage.getDataString());
+                myXBeeDevice.addDataListener(new IDataReceiveListener(){
+                    @Override
+                    public void dataReceived(XBeeMessage xbeeMessage) {	
+                        if (address1 == xbeeMessage.getDevice().get64BitAddress()) {
+                            //Update label in ui thread
+                            Platform.runLater(() -> {
+                                labelValue.setText("The BPM is" + xbeeMessage.getDataString());
+                            });
+                        }
+                    } 
                 });
             } catch(XBeeException e) {
                 System.out.println(">> Error");
@@ -199,11 +211,12 @@ public class MainApp extends Application {
     
     
     public void disconnectArduino() {
-        System.out.println("disconnectArduino()");
+        //System.out.println("disconnectArduino()");
         if (wired == 1){
             if (serialport != null)
                 serialport.closePort();
-        } else {
+        } 
+        if (wired == 0) {
             if (myXBeeDevice != null)
                 myXBeeDevice.close();
         }
